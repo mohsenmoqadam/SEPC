@@ -15,29 +15,27 @@ Use `git` command for downloading SEPC:
 2-use the SEPC
 -----
 go to SEPC directory:
-%cd SEPC
+	%cd SEPC
 
 Create your project:
-%./sepc.sh app_name
+	%./sepc.sh app_name
 
 Or 
 
-%./sepc.sh app_name app_ver
+	%./sepc.sh app_name app_ver
 
 3-run project on your PC and enjoy!
 -----
-%make proto
-%make rel-dev
-%make console-dev
+	%make proto
+	%make rel-dev
+	%make console-dev
 
 4-create a tar archive for stage:
-%make rer-stage
-
+	%make rer-stage
 take note of the last line, it informs you about `Tarball` path.
 You can upload it on stage environment.
 
 5-create a tar archive for prod:
-%make rer-prod
-
+	%make rer-prod
 take note of the last line, it informs you about `Tarball` path.
 You can upload it on production environment.
