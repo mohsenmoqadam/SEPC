@@ -34,12 +34,12 @@ Or:
 
 4-create a tar archive for stage:
 -----
-	%make rer-stage
+	%make rel-stage
 take note of the last line, it informs you about `Tarball` path.
 You can upload it on stage environment.
 
 5-create a tar archive for production:
 -----
-	%make rer-prod
+	%make rel-prod
 take note of the last line, it informs you about `Tarball` path.
 You can upload it on production environment.
