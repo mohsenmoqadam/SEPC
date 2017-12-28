@@ -10,18 +10,19 @@ Projects that created with SEPC has 4 profiles: `Test`, `Development`, `Stage` a
 1-download
 -----
 Use `git` command for downloading SEPC:
+-----
 	%git clone https://github.com/mohsenmoqadam/SEPC
 
 2-use the SEPC
 -----
 go to SEPC directory:
+-----
 	%cd SEPC
-
 Create your project:
+-----
 	%./sepc.sh app_name
-
-Or 
-
+Or: 
+-----
 	%./sepc.sh app_name app_ver
 
 3-run project on your PC and enjoy!
@@ -31,11 +32,13 @@ Or
 	%make console-dev
 
 4-create a tar archive for stage:
+-----
 	%make rer-stage
 take note of the last line, it informs you about `Tarball` path.
 You can upload it on stage environment.
 
 5-create a tar archive for prod:
+-----
 	%make rer-prod
 take note of the last line, it informs you about `Tarball` path.
 You can upload it on production environment.
