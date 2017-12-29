@@ -4,6 +4,17 @@
 AppName=$1
 AppVersion=$2
 TAB="$(printf '\t')"
+AppNameUpper=$(echo "$AppName" | tr '[:lower:]' '[:upper:]')
+
+## === find rebar path
+if [ -f ./script/rebar3 ]; then
+    REBAR="./script/rebar3"
+elif [ ! -z `which rebar3` ]; then
+    REBAR=$(which rebar3)
+else
+    printf "\e[41mPlease install rebar3. It is not found!\e[0m \n"
+    exit 1
+fi
 
 ## === check application name
 if [ ${#AppName} -eq 0 ]; then
@@ -24,7 +35,7 @@ printf "\e[104mApplication name:\e[0m %s\n" $AppName
 printf "\e[104mApplication version:\e[0m %s\n" $AppVersion
 
 ## === create erlang project
-/bin/rebar3 new app $AppName
+$REBAR new app $AppName
 mkdir $ProjectDir/include
 mkdir $ProjectDir/proto
 mkdir $ProjectDir/priv
@@ -39,8 +50,8 @@ cp ./script/rebar3 $ProjectDir/script
 cat > $ProjectDir/include/$AppName.hrl << EOF
 %% -*- mode:erlang -*-
 
--ifndef(HEADER_${AppName^^}).
--define(HEADER_${AppName^^}, true).
+-ifndef(HEADER_${AppNameUpper}).
+-define(HEADER_${AppNameUpper}, true).
 
 
 -ifdef(TEST).
