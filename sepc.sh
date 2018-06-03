@@ -356,7 +356,7 @@ console-dev:
 	\$(PWD)/script/rebar3 as dev tar
 	\$(RM) \$(PWD)/rebar.config
 	\$(MV) \$(PWD)/rebar.config.backup \$(PWD)/rebar.config
-	\$(MV) \$(PWD)/_build/dev/rel/my_app/$AppName-\$(VER).tar.gz \$(TMP)
+	\$(MV) \$(PWD)/_build/dev/rel/$AppName/$AppName-\$(VER).tar.gz \$(TMP)
 	\$(RM) -rf \$(TMP)/$AppName
 	\$(MKDIR) \$(TMP)/$AppName
 	\$(TAR) -zxvf \$(TMP)/$AppName-\$(VER).tar.gz -C \$(TMP)/$AppName
