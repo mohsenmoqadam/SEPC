@@ -29,7 +29,6 @@ Or:
 -----
 
 	%make proto
-	%make rel-dev
 	%make console-dev
 
 4-create a tar archive for stage:
