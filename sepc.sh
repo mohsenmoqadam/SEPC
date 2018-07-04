@@ -113,8 +113,8 @@ cat > $ProjectDir/rebar.config << EOF
                              {observer, load},
                              {runtime_tools, load}
                             ]},
-                           {dev_mode, true},
-                           {include_erts, false},
+                           {dev_mode, false},
+                           {include_erts, true},
                            {vm_args, "config/dev.vm.args"},
                            {sys_config, "config/dev.sys.config"}
                           ]}
@@ -315,11 +315,17 @@ EOF
 
 ## === creating Makefile
 cat > $ProjectDir/Makefile << EOF
-PWD := \$(shell pwd)
-SCP := \$(shell which scp)
-SED := \$(shell which sed)
-VER := \$(shell cat ./Version)
-FS  := username@file.server.address:~/path.in.home
+PWD   := \$(shell pwd)
+SCP   := \$(shell which scp)
+CP    := \$(shell which cp)
+MV    := \$(shell which mv)
+MKDIR := \$(shell which mkdir)
+RM    := \$(shell which rm)
+SED   := \$(shell which sed)
+VER   := \$(shell cat ./Version)
+TMP   := /tmp
+TAR   := \$(shell which tar)
+FS    := username@file.server.address:~/path.in.home
 
 .PHONY: proto compile\
         shell test\
@@ -345,26 +351,34 @@ test:
 	\$(PWD)/script/rebar3 ct
 
 console-dev:
-	_build/dev/rel/$AppName/bin/$AppName console
+	\$(SED) -i .backup 's/{$AppName, "$AppName-version"}/{$AppName, "\$(VER)"}/g' ./rebar.config
+	\$(PWD)/script/rebar3 as dev release
+	\$(PWD)/script/rebar3 as dev tar
+	\$(RM) \$(PWD)/rebar.config
+	\$(MV) \$(PWD)/rebar.config.backup \$(PWD)/rebar.config
+	\$(MV) \$(PWD)/_build/dev/rel/$AppName/$AppName-\$(VER).tar.gz \$(TMP)
+	\$(RM) -rf \$(TMP)/$AppName
+	\$(MKDIR) \$(TMP)/$AppName
+	\$(TAR) -zxvf \$(TMP)/$AppName-\$(VER).tar.gz -C \$(TMP)/$AppName
+	\$(TMP)/$AppName/bin/$AppName console
 
 rel-prod:
-	\$(SED) -i 's/{$AppName, "$AppName-version"}/{$AppName, "\$(VER)"}/g' ./rebar.config
+	\$(SED) -i .backup 's/{$AppName, "$AppName-version"}/{$AppName, "\$(VER)"}/g' ./rebar.config
 	\$(PWD)/script/rebar3 as prod release
 	\$(PWD)/script/rebar3 as prod tar
-	\$(SED) -i 's/{$AppName, "\$(VER)"}/{$AppName, "$AppName-version"}/g' ./rebar.config
-    #\$(SCP) -P 8522 \$(PWD)/_build/prod/rel/$AppName/$AppName-\$(VER).tar.gz \$(FS)
+	\$(RM) \$(PWD)/rebar.config
+	\$(MV) \$(PWD)/rebar.config.backup \$(PWD)/rebar.config
+	#\$(SCP) -P 8522 \$(PWD)/_build/prod/rel/$AppName/$AppName-\$(VER).tar.gz \$(FS)
 ${TAB}@printf "\nApplication: %s\n" \$(PWD)/_build/prod/rel/$AppName/$AppName-\$(VER).tar.gz
 
 rel-stage:
-	\$(SED) -i 's/{$AppName, "$AppName-version"}/{$AppName, "\$(VER)"}/g' ./rebar.config
+	\$(SED) -i .backup 's/{$AppName, "$AppName-version"}/{$AppName, "\$(VER)"}/g' ./rebar.config
 	\$(PWD)/script/rebar3 as stage release
 	\$(PWD)/script/rebar3 as stage tar
-	\$(SED) -i 's/{$AppName, "\$(VER)"}/{$AppName, "$AppName-version"}/g' ./rebar.config
-    #\$(SCP) -P 8522 \$(PWD)/_build/stage/rel/$AppName/$AppName-\$(VER).tar.gz \$(FS)
+	\$(RM) \$(PWD)/rebar.config
+	\$(MV) \$(PWD)/rebar.config.backup \$(PWD)/rebar.config
+	#\$(SCP) -P 8522 \$(PWD)/_build/stage/rel/$AppName/$AppName-\$(VER).tar.gz \$(FS)
 ${TAB}@printf "\nApplication: %s\n" \$(PWD)/_build/stage/rel/$AppName/$AppName-\$(VER).tar.gz
-
-rel-dev:
-	\$(PWD)/script/rebar3 as dev release
 
 EOF
 
