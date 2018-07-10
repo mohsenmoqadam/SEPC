@@ -190,15 +190,22 @@ EOF
 cat > $ProjectDir/config/test.sys.config << EOF
 %% -*- mode:erlang -*-
 [{$AppName, [{k1, v1}, {kn, vn}]},
-{lager, [
+ {lager, [
           {error_logger_hwm, 500},
           {colored, true},
+          {colors,[{debug,"\e[104m"},
+                   {info,"\e[100m"},
+                   {notice,"\e[1;36m"},
+                   {warning,"\e[33m"},
+                   {error,"\e[41m"},
+                   {critical,"\e[1;35m"},
+                   {alert,"\e[1;44m"},
+                   {emergency,"\e[1;41m"}]},
           {handlers, [
-                      %% {lager_console_backend, debug},
-                      {lager_console_backend, [{level, info}, {formatter, lager_default_formatter},
-                                               {formatter_config, ["\e[94m", time, "\e[0m ",
-                                                                   "\e[42m[", severity,"]\e[0m ",
-                                                                   {module, ["\e[32m", module, "\e[0m", {line, [":\e[92m", line, "\e[0m "], ""}], ""}, "",
+                      {lager_console_backend, [{level, debug}, {formatter, lager_default_formatter},
+                                               {formatter_config, ["\e[1;49;34m", time, "\e[0m ",
+                                                                   color, "[", severity,"]\e[0m ",
+                                                                   {module, ["\e[42m", module, "\e[0m", {line, [":\e[1;32m", line, "\e[0m "], ""}], ""}, "",
                                                                    "\e[91m[\e[0m", message ,"\e[91m]\e[0m" , "\r\n"]}]},
                       {lager_file_backend, [{file, "log/error.log"}, {level, error}]},
                       {lager_file_backend, [{file, "log/console.log"}, {level, info}]},
@@ -210,15 +217,22 @@ EOF
 cat > $ProjectDir/config/dev.sys.config << EOF
 %% -*- mode:erlang -*-
 [{$AppName, [{k1, v1}, {kn, vn}]},
-{lager, [
+ {lager, [
           {error_logger_hwm, 500},
           {colored, true},
+          {colors,[{debug,"\e[104m"},
+                   {info,"\e[100m"},
+                   {notice,"\e[1;36m"},
+                   {warning,"\e[33m"},
+                   {error,"\e[41m"},
+                   {critical,"\e[1;35m"},
+                   {alert,"\e[1;44m"},
+                   {emergency,"\e[1;41m"}]},
           {handlers, [
-                      %% {lager_console_backend, debug},
-                      {lager_console_backend, [{level, info}, {formatter, lager_default_formatter},
-                                               {formatter_config, ["\e[94m", time, "\e[0m ",
-                                                                   "\e[42m[", severity,"]\e[0m ",
-                                                                   {module, ["\e[32m", module, "\e[0m", {line, [":\e[92m", line, "\e[0m "], ""}], ""}, "",
+                      {lager_console_backend, [{level, debug}, {formatter, lager_default_formatter},
+                                               {formatter_config, ["\e[1;49;34m", time, "\e[0m ",
+                                                                   color, "[", severity,"]\e[0m ",
+                                                                   {module, ["\e[42m", module, "\e[0m", {line, [":\e[1;32m", line, "\e[0m "], ""}], ""}, "",
                                                                    "\e[91m[\e[0m", message ,"\e[91m]\e[0m" , "\r\n"]}]},
                       {lager_file_backend, [{file, "log/error.log"}, {level, error}]},
                       {lager_file_backend, [{file, "log/console.log"}, {level, info}]},
@@ -230,15 +244,22 @@ EOF
 cat > $ProjectDir/config/stage.sys.config << EOF
 %% -*- mode:erlang -*-
 [{$AppName, [{k1, v1}, {kn, vn}]},
-{lager, [
+ {lager, [
           {error_logger_hwm, 500},
           {colored, true},
+          {colors,[{debug,"\e[104m"},
+                   {info,"\e[100m"},
+                   {notice,"\e[1;36m"},
+                   {warning,"\e[33m"},
+                   {error,"\e[41m"},
+                   {critical,"\e[1;35m"},
+                   {alert,"\e[1;44m"},
+                   {emergency,"\e[1;41m"}]},
           {handlers, [
-                      %% {lager_console_backend, debug},
                       {lager_console_backend, [{level, info}, {formatter, lager_default_formatter},
-                                               {formatter_config, ["\e[94m", time, "\e[0m ",
-                                                                   "\e[42m[", severity,"]\e[0m ",
-                                                                   {module, ["\e[32m", module, "\e[0m", {line, [":\e[92m", line, "\e[0m "], ""}], ""}, "",
+                                               {formatter_config, ["\e[1;49;34m", time, "\e[0m ",
+                                                                   color, "[", severity,"]\e[0m ",
+                                                                   {module, ["\e[42m", module, "\e[0m", {line, [":\e[1;32m", line, "\e[0m "], ""}], ""}, "",
                                                                    "\e[91m[\e[0m", message ,"\e[91m]\e[0m" , "\r\n"]}]},
                       {lager_file_backend, [{file, "log/error.log"}, {level, error}]},
                       {lager_file_backend, [{file, "log/console.log"}, {level, info}]},
@@ -251,17 +272,25 @@ cat > $ProjectDir/config/prod.sys.config << EOF
 %% -*- mode:erlang -*-
 [{$AppName, [{k1, v1}, {kn, vn}]},
  {lager, [
-          {error_logger_hwm, 50},
+          {error_logger_hwm, 500},
           {colored, true},
+          {colors,[{debug,"\e[104m"},
+                   {info,"\e[100m"},
+                   {notice,"\e[1;36m"},
+                   {warning,"\e[33m"},
+                   {error,"\e[41m"},
+                   {critical,"\e[1;35m"},
+                   {alert,"\e[1;44m"},
+                   {emergency,"\e[1;41m"}]},
           {handlers, [
-                      %% {lager_console_backend, info},
-                      {lager_console_backend, [{level, info}, {formatter, lager_default_formatter},
-                                               {formatter_config, ["\e[94m", time, "\e[0m ",
-                                                                   "\e[41m[", severity,"]\e[0m ",
-                                                                   {module, ["\e[31m", module, "\e[0m", {line, [":\e[91m", line, "\e[0m "], ""}], ""}, "",
+                      {lager_console_backend, [{level, error}, {formatter, lager_default_formatter},
+                                               {formatter_config, ["\e[1;49;34m", time, "\e[0m ",
+                                                                   color, "[", severity,"]\e[0m ",
+                                                                   {module, ["\e[42m", module, "\e[0m", {line, [":\e[1;32m", line, "\e[0m "], ""}], ""}, "",
                                                                    "\e[91m[\e[0m", message ,"\e[91m]\e[0m" , "\r\n"]}]},
                       {lager_file_backend, [{file, "log/error.log"}, {level, error}]},
-                      {lager_file_backend, [{file, "log/console.log"}, {level, info}]}
+                      {lager_file_backend, [{file, "log/console.log"}, {level, info}]},
+                      {lager_file_backend, [{file, "log/debug.log"}, {level, debug}]}
                      ]}
          ]
  }].
