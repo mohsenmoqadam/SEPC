@@ -46,6 +46,10 @@ cp ./script/gpb $ProjectDir/script
 cp ./script/gpb.hrl $ProjectDir/include
 cp ./script/rebar3 $ProjectDir/script
 
+## === by default git does not keep track of empty directories
+## === so we add .gitkeep to it in order to avoid compilation error on `make compile`
+touch $ProjectDir/priv/.gitkeep
+
 ## === creating application header file
 cat > $ProjectDir/include/$AppName.hrl << EOF
 %% -*- mode:erlang -*-
