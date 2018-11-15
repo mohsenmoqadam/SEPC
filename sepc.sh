@@ -39,6 +39,11 @@ $REBAR new app $AppName
 mkdir $ProjectDir/include
 mkdir $ProjectDir/proto
 mkdir $ProjectDir/priv
+## === Git cannot add a completely empty directory. 
+## === People who want to track empty directories in Git 
+## === have created the convention of putting files called .gitkeep in these directories. 
+## === The file could be called anything; Git assigns no special significance to this name.
+touch $ProjectDir/priv/.gitkeep
 mkdir $ProjectDir/test
 mkdir $ProjectDir/script
 mkdir $ProjectDir/config
