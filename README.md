@@ -5,7 +5,7 @@ Projects that created with SEPC has 4 profiles: `Test`, `Development`, `Stage` a
 `Test` profile used for Common Test or CT.
 `Development` profile used for developing purpose. I use this profile for running project on my PC.
 `Stage` profile used for pre deployment. Before I deploy a project on production environment, I deploy it on stage and other staff used it for their purposes.
-`Production` profile used for real deployment on production serves.
+`Production` profile used for real deployment on production servers.
 
 1-download
 -----
