@@ -196,7 +196,7 @@ cat > $ProjectDir/config/test.sys.config << EOF
 %% -*- mode:erlang -*-
 [{$AppName, [{k1, v1}, {kn, vn}]},
  {lager, [
-          {error_logger_hwm, 500},
+          {error_logger_redirect, false},
           {colored, true},
           {colors,[{debug,"\e[104m"},
                    {info,"\e[100m"},
@@ -223,7 +223,7 @@ cat > $ProjectDir/config/dev.sys.config << EOF
 %% -*- mode:erlang -*-
 [{$AppName, [{k1, v1}, {kn, vn}]},
  {lager, [
-          {error_logger_hwm, 500},
+          {error_logger_redirect, false},
           {colored, true},
           {colors,[{debug,"\e[104m"},
                    {info,"\e[100m"},
@@ -250,7 +250,7 @@ cat > $ProjectDir/config/stage.sys.config << EOF
 %% -*- mode:erlang -*-
 [{$AppName, [{k1, v1}, {kn, vn}]},
  {lager, [
-          {error_logger_hwm, 500},
+          {error_logger_redirect, false},
           {colored, true},
           {colors,[{debug,"\e[104m"},
                    {info,"\e[100m"},
@@ -277,7 +277,7 @@ cat > $ProjectDir/config/prod.sys.config << EOF
 %% -*- mode:erlang -*-
 [{$AppName, [{k1, v1}, {kn, vn}]},
  {lager, [
-          {error_logger_hwm, 500},
+          {error_logger_redirect, false},
           {colored, true},
           {colors,[{debug,"\e[104m"},
                    {info,"\e[100m"},
