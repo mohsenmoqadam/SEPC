@@ -39,9 +39,9 @@ $REBAR new app $AppName
 mkdir $ProjectDir/include
 mkdir $ProjectDir/proto
 mkdir $ProjectDir/priv
-## === Git cannot add a completely empty directory. 
-## === People who want to track empty directories in Git 
-## === have created the convention of putting files called .gitkeep in these directories. 
+## === Git cannot add a completely empty directory.
+## === People who want to track empty directories in Git
+## === have created the convention of putting files called .gitkeep in these directories.
 ## === The file could be called anything; Git assigns no special significance to this name.
 touch $ProjectDir/priv/.gitkeep
 mkdir $ProjectDir/test
@@ -50,6 +50,7 @@ mkdir $ProjectDir/config
 cp ./script/gpb $ProjectDir/script
 cp ./script/gpb.hrl $ProjectDir/include
 cp ./script/rebar3 $ProjectDir/script
+cp ./script/codec.erl $ProjectDir/script
 
 ## === creating application header file
 cat > $ProjectDir/include/$AppName.hrl << EOF
@@ -334,15 +335,17 @@ EOF
 
 ## === creating sample protobuff files
 cat > $ProjectDir/proto/$AppName.sample.type.proto << EOF
+// +> category = REPLY
 package $AppName.sample.type;
-// messageCode = 001
+// *> Code = 101
 message  Type {
 }
 EOF
 cat > $ProjectDir/proto/$AppName.sample.func.proto << EOF
+// +> category = REQUEST
 package $AppName.sample.func;
 import "$AppName.sample.type.proto";
-// messageCode = 101
+// *> Code = 151
 message Call {
 }
 EOF
@@ -352,22 +355,19 @@ cat > $ProjectDir/Makefile << EOF
 PWD := \$(shell pwd)
 SCP := \$(shell which scp)
 SED := \$(shell which sed)
+ES  := \$(shell which escript)
 VER := \$(shell cat ./Version)
 FS  := username@file.server.address:~/path.in.home
 
-.PHONY: proto compile\
-        shell test\
-	    console-dev\
-		rel-dev rel-stage rel-prod
+.PHONY: proto codec compile shell test console-dev rel-dev rel-stage rel-prod
 
-all: proto compile
+all: proto codec compile
 
 proto:
-	\$(PWD)/script/gpb -pkgs \
-	-I \$(PWD)/proto \
-	-o-erl \$(PWD)/src \
-	-o-hrl \$(PWD)/include \
-	\$(PWD)/proto/*.proto
+	\$(PWD)/script/gpb -pkgs -I \$(PWD)/proto -o-erl \$(PWD)/src -o-hrl \$(PWD)/include \$(PWD)/proto/*.proto
+
+codec:
+	\$(ES) \$(PWD)/script/codec.erl test \$(PWD)/proto/ \$(PWD)/src
 
 compile:
 	\$(PWD)/script/rebar3 compile
