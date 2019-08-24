@@ -367,7 +367,7 @@ proto:
 	\$(PWD)/script/gpb -pkgs -I \$(PWD)/proto -o-erl \$(PWD)/src -o-hrl \$(PWD)/include \$(PWD)/proto/*.proto
 
 codec:
-	\$(ES) \$(PWD)/script/codec.erl test \$(PWD)/proto/ \$(PWD)/src
+	\$(ES) \$(PWD)/script/codec.erl $AppName \$(PWD)/proto/ \$(PWD)/src
 
 compile:
 	\$(PWD)/script/rebar3 compile
